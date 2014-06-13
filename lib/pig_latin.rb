@@ -1,7 +1,17 @@
 require "pig_latin/version"
 
 module PigLatin
-  def self.translate(word)
+  def self.translate(sentence)
+    words = sentence.split(' ')
+
+    words.map do |word|
+      translate_word(word)
+    end.join(' ')
+  end
+
+  private
+
+  def self.translate_word(word)
     regexp = /\b(y|[bcdfghjklmnpqrstvwxz]*)([\w']+)\b/i
 
     first_letter = word.split(//).first
@@ -18,8 +28,6 @@ module PigLatin
 
     second_group + first_group + ending
   end
-
-  private
 
   def self.vowel?(letter)
     ['a','e','i','o','u'].include? letter
